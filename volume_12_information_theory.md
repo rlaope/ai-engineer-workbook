@@ -493,6 +493,88 @@ NumPy 만으로 *엔트로피·KL·분류 학습* 모두를 구현할 수 있습
 
 ---
 
+## 10. 정보 이론의 ML 응용 사례
+
+### 10.1 지식 증류 (Knowledge Distillation)
+
+Teacher 모델의 출력 분포를 Student 모델이 *KL 발산을 최소화* 하며 모방하는 학습법입니다.
+
+```python
+import torch.nn.functional as F
+
+def distillation_loss(student_logits, teacher_logits, T=4.0):
+    student_log_probs = F.log_softmax(student_logits / T, dim=-1)
+    teacher_probs = F.softmax(teacher_logits / T, dim=-1)
+    return F.kl_div(student_log_probs, teacher_probs, reduction='batchmean') * T**2
+```
+
+Temperature `T` 가 *분포를 부드럽게* 해 dark knowledge (낮은 확률 클래스 간 관계) 를 전달합니다. DistilBERT, TinyLLaMA 같은 작은 모델이 이 기법으로 만들어졌습니다.
+
+### 10.2 정책 그래디언트와 엔트로피 보너스
+
+강화학습에서 *정책 분포가 너무 결정론적이 되지 않게* 엔트로피 보너스를 추가합니다.
+
+$$L = L_{\text{policy}} - \beta H(\pi)$$
+
+엔트로피가 클수록 손실이 작아져, 정책이 *탐색 (Exploration)* 을 유지합니다. PPO·SAC 같은 RL 알고리즘의 표준 부품.
+
+### 10.3 활성 학습 (Active Learning)
+
+라벨링이 비싼 환경에서, *모델이 가장 불확실한 샘플* (높은 예측 엔트로피) 을 우선 라벨링하면 *적은 라벨로 큰 효과* 를 얻습니다.
+
+```python
+import numpy as np
+
+def select_most_uncertain(probs, top_k=10):
+    # probs: (n_samples, n_classes)
+    entropy = -np.sum(probs * np.log(probs + 1e-12), axis=1)
+    return np.argsort(entropy)[-top_k:]   # 엔트로피 큰 순
+```
+
+### 10.4 챕터 정리
+
+정보 이론은 *증류·RL 엔트로피 보너스·활성 학습* 등 ML 의 다양한 영역에 등장합니다. KL 과 엔트로피가 *모델 사이 거리·분포의 다양성* 을 다루는 표준 도구입니다.
+
+---
+
+## 11. 흔한 함정
+
+### 11.1 KL 의 비대칭 혼동
+
+$D_{KL}(P \| Q) \neq D_{KL}(Q \| P)$. 어느 쪽을 최소화하느냐에 따라 *결과가 다릅니다*.
+
+- $D_{KL}(P \| Q)$ — *P 가 큰 곳에서 Q 도 커야* 함 (mode-covering)
+- $D_{KL}(Q \| P)$ — *Q 가 큰 곳에서 P 도 커야* 함 (mode-seeking)
+
+VAE 의 ELBO 는 *forward KL*, GAN 의 일부 변형은 *reverse KL* 을 사용합니다.
+
+### 11.2 log(0) 함정
+
+`log(p)` 에서 `p=0` 이면 $-\infty$ 가 되어 NaN 을 만듭니다. 항상 *작은 epsilon 추가*:
+
+```python
+loss = -np.sum(p * np.log(q + 1e-12))
+```
+
+PyTorch 의 `F.cross_entropy` 는 내부적으로 안정화되어 있지만, 직접 구현 시 주의.
+
+### 11.3 소프트맥스 overflow
+
+`exp(큰 수)` 가 float16/float32 의 한계를 넘어 NaN. *최댓값을 빼는 안정화* 가 필수:
+
+```python
+def softmax(z):
+    z = z - z.max()   # 안정화
+    e = np.exp(z)
+    return e / e.sum()
+```
+
+### 11.4 챕터 정리
+
+KL 의 비대칭·log(0)·소프트맥스 overflow 의 3 함정은 *수치 안정성* 의 핵심이며, 라이브러리가 자동으로 처리하지 않는 경우 직접 챙겨야 합니다.
+
+---
+
 ## 권 정리
 
 이 권에서 우리는 다음을 배웠습니다.
