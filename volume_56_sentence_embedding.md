@@ -1,40 +1,142 @@
-# Volume 16 — 문장·문서 임베딩
+# Volume 56 — 문장·문서 임베딩
 
-> 이 권이 끝나면 *어떤 텍스트든 벡터 한 줄로 변환해 검색·분류·클러스터링에 쓸 수 있는 사고법*을 갖추게 됩니다.
+> 이 권이 끝나면 *어떤 텍스트든 벡터 한 줄로 변환해 검색·분류·클러스터링에 쓸 수 있는 사고법* 을 갖추게 됩니다.
 
 ## 목적
 
-RAG·시멘틱 검색·중복 제거·분류는 모두 *문장 또는 문서를 의미 벡터로 변환*하는 능력에 기댑니다. 단순히 단어 임베딩을 평균하는 방법부터, 트랜스포머 기반 Sentence-BERT, OpenAI/Cohere 의 상용 임베딩 API 까지 단계적으로 다룹니다. 이 권은 RAG 권(Volume 40) 의 직접적 전제입니다.
+단어 임베딩에서 한 단계 위, *문장·문단·문서 전체* 를 *고정 차원 벡터* 로 표현하는 기법입니다. RAG·시멘틱 검색·문서 분류의 가장 직접적 기반이며, AI 엔지니어가 매일 사용하는 도구입니다.
 
 ## 선수 지식
 
-- Volume 51, 33 완료
-- 외부 지식: 검색·필터의 일반 개념
+- Volume 55 완료
 
 ## 학습 결과
 
-이 권을 마치면 다음을 할 수 있게 됩니다.
+1. Sentence-BERT 의 *Siamese 학습* 구조를 이해합니다.
+2. OpenAI Embedding·E5·BGE 같은 표준 모델을 알 수 있습니다.
+3. 임베딩 모델 선택 기준 (차원·언어·도메인) 을 적용할 수 있습니다.
+4. Hugging Face `sentence-transformers` 로 임베딩을 만들 수 있습니다.
 
-1. 단어 임베딩 평균이 문장 임베딩의 *기준선*이 되는 이유를 알 수 있습니다.
-2. Sentence-BERT 의 학습 목표(트리플렛·대조 학습) 를 설명할 수 있습니다.
-3. CLS 토큰 임베딩과 평균 풀링의 차이를 알 수 있습니다.
-4. 상용 임베딩 API 의 호출 패턴과 비용 구조를 인식합니다.
-5. 임베딩 모델 선택 시 고려할 5가지 기준을 갖게 됩니다.
+---
 
-## 챕터 목차
+## 1. 단순 평균 임베딩의 한계
 
-1. **문장 임베딩의 정의와 용도**
-2. **단어 임베딩 평균 — 기준선** 과 한계
-3. **CLS 토큰 임베딩 — BERT 의 기본 방법**
-4. **Sentence-BERT — 시메네스 네트워크 + 대조 학습**
-5. **E5·BGE 같은 최신 임베딩 모델**
-6. **상용 임베딩 API — OpenAI·Cohere·Voyage**
-7. **임베딩 정규화와 차원**
-8. **임베딩 모델 선택 워크시트**
+문장 임베딩의 *가장 단순한 시도*: 단어 임베딩들의 평균.
+
+```python
+sentence = "AI engineer is great"
+emb = np.mean([word_emb[w] for w in sentence.split()], axis=0)
+```
+
+문제: *어순·구문 무시*. *"dog bites man"* 과 *"man bites dog"* 가 같은 임베딩.
+
+---
+
+## 2. Sentence-BERT (2019)
+
+### 2.1 발상
+
+BERT 의 *문장 임베딩* 을 *Siamese 구조 + 대조 학습* 으로 fine-tune. 두 문장 임베딩의 *코사인 유사도* 가 *의미적 유사도* 에 일치하도록.
+
+### 2.2 사용
+
+```python
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+sentences = ["AI engineering is fun.", "Software development is creative."]
+embeddings = model.encode(sentences)
+print(embeddings.shape)   # (2, 384)
+```
+
+`all-MiniLM-L6-v2` 는 *6 층의 작은 모델*, 384 차원, 매우 빠름. 산업 표준 중 하나.
+
+---
+
+## 3. OpenAI Embedding
+
+### 3.1 모델
+
+- `text-embedding-3-small` — 1536 차원, 저렴
+- `text-embedding-3-large` — 3072 차원, 정확도 높음
+
+### 3.2 사용
+
+```python
+from openai import OpenAI
+client = OpenAI()
+
+emb = client.embeddings.create(
+    input="AI engineering",
+    model="text-embedding-3-small"
+).data[0].embedding
+print(len(emb))   # 1536
+```
+
+장점: *최고 수준 정확도*. 단점: API 비용·외부 의존.
+
+---
+
+## 4. 한국어·다국어
+
+- **multilingual-e5** — 100+ 언어
+- **bge-m3** (BAAI) — 다국어 + 다중 검색 모드
+- **KoSimCSE** — 한국어 특화
+- **KoSentenceBERT**
+
+한국어 도메인은 *multilingual 모델 + 자기 도메인 fine-tune* 이 표준.
+
+---
+
+## 5. 임베딩 모델 선택 기준
+
+```
++----------+-------------------+
+| 기준     | 권장              |
++----------+-------------------+
+| 빠른 시작 | OpenAI API        |
+| 자체 운영 | sentence-transformers |
+| 한국어    | bge-m3, KoSimCSE  |
+| 도메인    | 자기 데이터 fine-tune |
+| 큰 차원   | text-embedding-3-large |
+| 작은 차원 | all-MiniLM-L6-v2  |
++----------+-------------------+
+```
+
+---
+
+## 6. 임베딩 평가
+
+벡터 검색 정확도로 평가. 표준 벤치마크: **MTEB (Massive Text Embedding Benchmark)**.
+
+자기 도메인 평가는 *(질의, 정답 문서) 쌍* 을 만들어 *Top-K Recall*·*MRR* 측정.
+
+---
+
+## 권 정리
+
+- 단순 평균 = 어순 무시 한계
+- Sentence-BERT = Siamese + 대조 학습
+- OpenAI Embedding = SaaS 표준
+- 한국어는 multilingual + fine-tune
+- MTEB 로 모델 평가
+
+가장 기억할 한 줄: **"문장 임베딩은 RAG·검색·분류의 코어이며, sentence-transformers 또는 OpenAI Embedding 으로 즉시 사용 가능하다."**
+
+다음 권: [Volume 57 — 벡터 검색과 ANN](./volume_57_vector_search.md)
+
+---
 
 ## 자가점검 키워드
 
-`문장 임베딩`, `Sentence-BERT`, `대조 학습`, `CLS`, `평균 풀링`, `E5/BGE`, `OpenAI Embedding`, `정규화`
+`Sentence-BERT`, `Siamese`, `대조 학습`, `OpenAI Embedding`, `multilingual-e5`, `MTEB`
+
+## 자가점검 질문
+
+1. 단순 평균 임베딩의 한계를 설명하십시오.
+2. Sentence-BERT 의 학습 방식을 한 문단으로 적으십시오.
+3. 한국어 도메인에 적합한 임베딩 모델 3 가지를 적으십시오.
+4. 임베딩 모델 평가의 표준 벤치마크 이름과 메트릭을 적으십시오.
 
 ## 다음 권
 
