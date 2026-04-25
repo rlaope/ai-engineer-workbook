@@ -8,7 +8,7 @@
 
 ## 선수 지식
 
-- Volume 50, 84 완료
+- Volume 92, 84 완료
 - 외부 지식: 사용자 행동 분석의 일반 개념
 
 ## 학습 결과
@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 98 — AI 가속기 비교](./volume_98_accelerators.md)
+[Volume 98 — AI 가속기 비교](./volume_90_accelerators.md)
