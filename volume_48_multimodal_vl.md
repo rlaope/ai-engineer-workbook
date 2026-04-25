@@ -1,41 +1,123 @@
-# Volume 85 — 멀티모달 비전-언어
+# Volume 48 — 멀티모달 비전-언어
 
 > 이 권이 끝나면 CLIP·BLIP·LLaVA 같은 모델이 *이미지와 텍스트를 같은 공간으로 모으는* 발상을 그림으로 그릴 수 있게 됩니다.
 
 ## 목적
 
-이미지와 텍스트를 함께 다루는 모델은 텍스트→이미지 검색, 이미지 캡셔닝, 시각적 질문응답(VQA), 멀티모달 챗봇의 기반입니다. 이 권은 CLIP 의 대조 학습으로 시작해, BLIP 의 생성 능력 추가, LLaVA 의 LLM 결합까지의 흐름을 다집니다. 멀티모달 임베딩 권(69) 의 직접 전제입니다.
+현대 멀티모달 모델은 *이미지와 텍스트를 같은 임베딩 공간* 에 매핑하거나, *LLM 에 비전 입력을 추가* 하는 방식으로 만들어집니다. CLIP·BLIP·LLaVA·GPT-4V·Claude 4 Vision 같은 모델이 이 패러다임의 산물입니다.
 
 ## 선수 지식
 
-- Volume 51, 33, 34, 64 완료
-- 외부 지식: 검색·임베딩의 일반 개념
+- Volume 45, 47 완료
 
 ## 학습 결과
 
-이 권을 마치면 다음을 할 수 있게 됩니다.
+1. CLIP 의 *이미지-텍스트 대조 학습* 발상을 이해합니다.
+2. BLIP·LLaVA 의 *비전-언어 결합* 패턴을 알 수 있습니다.
+3. GPT-4V·Claude Vision 같은 LLM 의 비전 처리 구조를 그릴 수 있습니다.
+4. 멀티모달 모델의 *Zero-shot 분류* 능력을 설명할 수 있습니다.
 
-1. CLIP 의 *이미지-텍스트 대조 학습* 손실을 적을 수 있습니다.
-2. CLIP 임베딩으로 Zero-Shot 분류를 수행할 수 있습니다.
-3. BLIP·BLIP-2 의 캡셔닝 능력 추가 방식을 설명할 수 있습니다.
-4. LLaVA 가 비전 인코더와 LLM 을 결합하는 *Projector* 의 역할을 이해합니다.
-5. 멀티모달 모델의 평가 어려움(VQA·캡셔닝 메트릭) 을 인식합니다.
+---
 
-## 챕터 목차
+## 1. CLIP — 대조 학습으로 이미지·텍스트 정렬
 
-1. **멀티모달의 정의와 의미**
-2. **CLIP** — Contrastive Language-Image Pretraining
-3. **CLIP 의 응용** — Zero-Shot 분류·검색·생성 가이던스
-4. **SigLIP** — Sigmoid 기반 변형
-5. **BLIP / BLIP-2** — 캡셔닝과 생성
-6. **LLaVA** — 비전 인코더 + LLM
-7. **Flamingo·Qwen-VL·InternVL** — 멀티모달 LLM 계보
-8. **멀티모달 평가** — VQA·CIDEr·CLIPScore
+### 1.1 발상
+
+OpenAI 가 2021 년 발표. *4 억 개의 (이미지, 텍스트) 쌍* 으로 학습.
+
+```
+이미지 인코더 (ViT) → 이미지 임베딩
+텍스트 인코더 (Transformer) → 텍스트 임베딩
+
+같은 쌍은 임베딩이 가깝게, 다른 쌍은 멀게 (대조 학습)
+```
+
+### 1.2 Zero-shot 분류
+
+분류기 학습 없이 *텍스트 프롬프트* 로 분류:
+
+```python
+import clip, torch
+from PIL import Image
+
+model, preprocess = clip.load("ViT-B/32")
+image = preprocess(Image.open("dog.jpg")).unsqueeze(0)
+text = clip.tokenize(["a dog", "a cat", "a car"])
+
+with torch.no_grad():
+    image_features = model.encode_image(image)
+    text_features = model.encode_text(text)
+    
+sims = (image_features @ text_features.T).softmax(dim=-1)
+print(sims)   # 'a dog' 가 가장 높음
+```
+
+### 1.3 영향
+
+CLIP 임베딩은 *이미지 검색·생성 모델 가이드 (Stable Diffusion)·LLaVA 의 비전 인코더* 등 광범위하게 활용됩니다.
+
+---
+
+## 2. LLaVA 류 — LLM + 비전 인코더
+
+### 2.1 구조
+
+```
+이미지 → ViT → 비전 토큰
+                    ↓
+                [Projector] (작은 MLP)
+                    ↓
+텍스트 → Tokenizer → 텍스트 토큰
+                    ↓
+[비전 토큰 + 텍스트 토큰] → LLM → 응답
+```
+
+핵심: *작은 Projector 만 학습* 해 비전 인코더의 출력을 LLM 의 토큰 공간으로 매핑.
+
+### 2.2 결과
+
+LLM 의 언어 능력 + 비전 인코더의 시각 능력 결합. *이미지에 대한 자연어 질의응답* 가능.
+
+---
+
+## 3. GPT-4V·Claude Vision
+
+폐쇄형 모델. 자세한 구조는 비공개지만, 비슷한 패턴 추정.
+
+응용: *문서 이해·차트 분석·스크린샷 분석·코드 스크린샷 OCR·UI 테스트* 등.
+
+---
+
+## 4. BLIP·BLIP-2
+
+Salesforce 의 모델. *이미지 캡셔닝·VQA (Visual Question Answering)* 에 강점. Q-Former 라는 효율적 결합 모듈 사용.
+
+---
+
+## 권 정리
+
+- CLIP = 이미지·텍스트 같은 공간 매핑 (대조 학습)
+- LLaVA 류 = LLM + 비전 인코더 + Projector
+- GPT-4V·Claude Vision = 폐쇄형 멀티모달 표준
+- 멀티모달은 *Zero-shot 분류·VQA·문서 이해* 등 광범위 응용
+
+가장 기억할 한 줄: **"멀티모달 모델은 이미지와 텍스트를 같은 임베딩 공간에 모으거나 LLM 에 비전을 결합한다."**
+
+다음 권: [Volume 49 — RNN·LSTM·GRU 와 그 한계](./volume_49_rnn_lstm.md)
+
+---
 
 ## 자가점검 키워드
 
-`CLIP`, `Contrastive`, `Zero-Shot`, `SigLIP`, `BLIP`, `LLaVA`, `Projector`, `VQA`
+`CLIP`, `대조 학습`, `Zero-shot`, `LLaVA`, `Projector`, `GPT-4V`, `BLIP`, `Q-Former`
+
+## 자가점검 질문
+
+1. CLIP 의 학습 목표를 한 문단으로 설명하십시오.
+2. LLaVA 류 모델의 *Projector* 가 하는 역할을 적으십시오.
+3. CLIP 의 Zero-shot 분류가 어떻게 가능한지 설명하십시오.
+4. 멀티모달 모델의 산업 응용 3 가지를 적으십시오.
 
 ## 다음 권
 
-[Volume 52 — Long Context 기법](./volume_52_long_context.md)
+[Volume 49 — RNN·LSTM·GRU 와 그 한계](./volume_49_rnn_lstm.md)
