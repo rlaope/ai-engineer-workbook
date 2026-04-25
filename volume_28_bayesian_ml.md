@@ -1,40 +1,152 @@
-# Volume 44 — 베이지안 머신러닝
+# Volume 28 — 베이지안 머신러닝
 
-> 이 권이 끝나면 *불확실성을 모델링한다*는 한 문장이 코드 수준에서 어떻게 가능한지 보일 수 있게 됩니다.
+> 이 권이 끝나면 *불확실성을 모델링한다* 는 한 문장이 코드 수준에서 어떻게 가능한지 보일 수 있게 됩니다.
 
 ## 목적
 
-대부분의 ML 모델은 점 추정(point estimate) 만 출력합니다. *모델이 95% 확신*한다는 정보가 없습니다. 베이지안 ML 은 이 한계를 *분포 추정*으로 풀며, 의료·금융·자율주행처럼 잘못된 자신감이 큰 비용을 치르는 영역에서 필수입니다. 또한 변분 추론·MCMC 같은 도구는 VAE·디퓨전·RLHF 의 기반이기도 합니다.
+표준 ML 모델은 *예측 한 값* 만 출력합니다. 베이지안 ML 은 *예측의 불확실성 분포* 를 출력합니다. 의료·금융·자율주행 같은 *결정의 신뢰도가 중요한* 영역에서 베이지안 사고가 결정적입니다. 이 권은 베이지안 회귀·MCMC·변분 추론의 직관을 다집니다.
 
 ## 선수 지식
 
-- Volume 11, 8, 56 완료
-- 외부 지식: 신뢰구간의 직관
+- Volume 11, 12, 17 완료
 
 ## 학습 결과
 
-이 권을 마치면 다음을 할 수 있게 됩니다.
+1. 베이지안 회귀의 *예측 분포* 가 무엇인지 이해합니다.
+2. MCMC 의 발상을 그릴 수 있습니다.
+3. 변분 추론이 *왜 MCMC 보다 빠른가* 알 수 있습니다.
+4. 베이지안 신경망의 적용 시점을 식별할 수 있습니다.
 
-1. 빈도주의와 베이지안의 사고 차이를 한 문단으로 설명할 수 있습니다.
-2. 사전·우도·사후의 곱 관계를 적을 수 있습니다.
-3. 켤레 사전(Conjugate Prior) 의 의미와 한계를 알 수 있습니다.
-4. MCMC(Metropolis-Hastings·Gibbs·HMC) 의 큰 그림을 그릴 수 있습니다.
-5. 변분 추론(Variational Inference) 의 기본 발상을 설명할 수 있습니다.
+---
 
-## 챕터 목차
+## 1. 베이지안 회귀
 
-1. **빈도주의 vs 베이지안** — 두 사고법의 차이
-2. **사전·우도·사후** — 베이즈의 핵심 식
-3. **켤레 사전** — 닫힌 형태 사후
-4. **MCMC 입문** — Metropolis-Hastings·Gibbs
-5. **HMC·NUTS** — 그래디언트를 활용한 샘플링
-6. **변분 추론(VI)** — 분포로 분포를 근사
-7. **베이지안 신경망** — 가중치의 분포
-8. **PyMC / NumPyro 로 직접 해 보기**
+### 1.1 표준 회귀와의 차이
+
+표준: $\hat{y} = X\hat{\beta}$ (점 예측)
+베이지안: $p(y \mid X)$ (예측 분포)
+
+가중치 $\beta$ 자체를 *분포* 로 다룸:
+
+$$p(\beta \mid D) \propto p(D \mid \beta) p(\beta)$$
+
+### 1.2 사용 예
+
+```python
+import pymc as pm
+import numpy as np
+
+with pm.Model() as model:
+    beta = pm.Normal('beta', 0, 1, shape=3)
+    sigma = pm.HalfNormal('sigma', 1)
+    mu = X @ beta
+    y_obs = pm.Normal('y_obs', mu, sigma, observed=y)
+    trace = pm.sample(1000)
+
+# 예측 분포에서 신뢰구간
+print(pm.summary(trace, var_names=['beta']))
+```
+
+장점: *불확실성 정량화*. 단점: *계산 비용 큼*.
+
+---
+
+## 2. MCMC (Markov Chain Monte Carlo)
+
+### 2.1 발상
+
+사후 분포에서 직접 샘플링이 어렵다면, *그 분포에 수렴하는 마르코프 체인을 시뮬레이션*.
+
+알고리즘: Metropolis-Hastings, Gibbs Sampling, Hamiltonian Monte Carlo (HMC), No-U-Turn Sampler (NUTS).
+
+### 2.2 강약
+
+- 강점: *임의 분포 처리*, *이론적으로 정확*
+- 약점: *느림*, *수렴 진단 어려움*
+
+대규모 신경망에는 *계산 비용 때문에* 적용 어려움.
+
+---
+
+## 3. 변분 추론 (Variational Inference)
+
+### 3.1 발상
+
+진짜 사후 분포 $p(\beta \mid D)$ 를 *간단한 분포 $q(\beta)$* 로 근사. KL 발산 최소화로 학습.
+
+$$q^* = \arg\min_q D_{KL}(q(\beta) \| p(\beta \mid D))$$
+
+### 3.2 장점
+
+- *MCMC 보다 훨씬 빠름*
+- *대규모 모델에 적용 가능*
+- *최적화 문제* 로 환원
+
+### 3.3 단점
+
+- *진짜 사후 분포의 한 근사* — 정확도 손실
+- *Mode-Seeking* 행동 (한 모드만 잡음)
+
+---
+
+## 4. 베이지안 신경망
+
+신경망 가중치를 *분포* 로 다룸. 추론 시 *여러 가중치 샘플로 예측 → 평균* — 불확실성 정량화.
+
+```python
+# pyro 또는 BayesianTorch 사용
+import torch
+import pyro
+import pyro.nn as pnn
+
+class BNN(pnn.PyroModule):
+    def __init__(self):
+        super().__init__()
+        self.fc = pnn.PyroModule[torch.nn.Linear](10, 1)
+        self.fc.weight = pnn.PyroSample(
+            dist.Normal(0., 1.).expand([1, 10]).to_event(2)
+        )
+```
+
+응용: *의료 진단 (불확실하면 인간 의사에게)*, *자율주행 (안전 마진 계산)*.
+
+---
+
+## 5. 실용적 대안 — Deep Ensemble
+
+여러 신경망을 *다른 시드로 학습* 한 뒤 *예측 분산을 불확실성으로 사용*. 베이지안보다 단순하면서 비슷한 결과.
+
+```python
+predictions = [model.predict(X) for model in ensemble]
+mean_pred = np.mean(predictions, axis=0)
+uncertainty = np.std(predictions, axis=0)
+```
+
+---
+
+## 권 정리
+
+- 베이지안 ML = 불확실성 분포 출력
+- MCMC = 느리고 정확
+- 변분 추론 = 빠르고 근사적
+- 베이지안 신경망 = 의료·자율주행 같은 고위험 도메인
+- Deep Ensemble = 실용적 대안
+
+가장 기억할 한 줄: **"불확실성이 결정에 영향을 미치는 도메인에서는 점 예측보다 분포 예측이 가치가 있다."**
+
+다음 권: [Volume 29 — 하이퍼파라미터 탐색](./volume_29_hpo.md)
+
+---
 
 ## 자가점검 키워드
 
-`빈도주의/베이지안`, `사전/우도/사후`, `켤레 사전`, `MCMC`, `HMC`, `VI`, `BNN`, `PyMC`
+`사후 분포`, `MCMC`, `HMC/NUTS`, `변분 추론`, `베이지안 신경망`, `Deep Ensemble`
+
+## 자가점검 질문
+
+1. 표준 ML 과 베이지안 ML 의 출력 차이를 적으십시오.
+2. MCMC 와 변분 추론의 트레이드오프를 비교하십시오.
+3. Deep Ensemble 이 *실용적 베이지안 대안* 인 이유를 설명하십시오.
 
 ## 다음 권
 
