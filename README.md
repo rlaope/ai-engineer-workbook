@@ -8,7 +8,7 @@
 
 ---
 
-## 인덱스 (전 86권)
+## 인덱스 (전 104권)
 
 ### Track A — 입문과 직무 지형
 
@@ -18,6 +18,7 @@
 - [51](./volume_51_collaboration.md) — 협업과 의사소통
 - [52](./volume_52_ethics.md) — AI 엔지니어의 윤리와 책임
 - [53](./volume_53_info_tracking.md) — 정보 추적 시스템
+- [92](./volume_92_ai_app_planning.md) — AI 애플리케이션 기획·PRD
 
 ### Track B — 수학과 과학 컴퓨팅
 
@@ -30,6 +31,9 @@
 - [54](./volume_54_numerical.md) — 수치 해석과 부동소수점
 - [55](./volume_55_optimization.md) — 최적화 이론
 - [56](./volume_56_stochastic_process.md) — 확률 과정 — Markov·SDE
+- [102](./volume_102_learning_theory.md) — 통계적 학습 이론
+- [103](./volume_103_information_geometry.md) — 정보 기하와 매니폴드
+- [104](./volume_104_graph_spectral.md) — 그래프 이론과 스펙트럴 방법
 
 ### Track C — 머신러닝
 
@@ -86,6 +90,7 @@
 - [69](./volume_69_multimodal_embedding.md) — 멀티모달 임베딩
 - [70](./volume_70_embedding_eval.md) — 임베딩 평가와 벤치마크
 - [71](./volume_71_reranker.md) — Reranker 깊이
+- [99](./volume_99_embedding_training.md) — 임베딩 모델 직접 학습
 
 ### Track H — 대규모 언어 모델 (LLM)
 
@@ -97,6 +102,8 @@
 - [72](./volume_72_decoding.md) — LLM 디코딩 알고리즘
 - [73](./volume_73_model_sizing.md) — 모델 사이즈 의사결정
 - [74](./volume_74_constrained_gen.md) — Constrained Generation
+- [87](./volume_87_defensive_prompting.md) — 방어적 프롬프트 엔지니어링
+- [91](./volume_91_llm_as_judge.md) — LLM-as-Judge 평가 자동화
 
 ### Track I — AI Agent
 
@@ -124,6 +131,8 @@
 - [81](./volume_81_kv_cache.md) — KV 캐시 깊이
 - [82](./volume_82_speculative.md) — Speculative Decoding
 - [83](./volume_83_distributed_training.md) — 분산 학습
+- [98](./volume_98_accelerators.md) — AI 가속기 비교 — GPU·TPU·Trainium·Cerebras·Groq
+- [100](./volume_100_cuda_python.md) — CUDA Python 입문 — Numba·CuPy·Triton
 
 ### Track L — 운영과 책임
 
@@ -131,6 +140,24 @@
 - [84](./volume_84_monitoring_deep.md) — 모델 모니터링 깊이
 - [85](./volume_85_postmortem.md) — AI 인시던트 사후 분석
 - [86](./volume_86_data_governance.md) — 데이터 거버넌스·라벨링
+- [90](./volume_90_system_architecture.md) — AI 시스템 아키텍처 종합
+- [97](./volume_97_user_feedback.md) — 사용자 피드백 시스템
+
+### Track M — 미세조정과 적응
+
+- [88](./volume_88_peft.md) — PEFT — LoRA·QLoRA·Adapter·Prompt Tuning
+- [94](./volume_94_model_merging.md) — 모델 병합과 멀티태스크
+
+### Track N — 데이터·NLP 응용
+
+- [89](./volume_89_dataset_engineering.md) — 데이터셋 엔지니어링 종합
+- [93](./volume_93_ner.md) — NER·정보 추출
+- [95](./volume_95_text_classification_compare.md) — 텍스트 분류 4 접근 비교
+- [96](./volume_96_text_clustering.md) — 텍스트 클러스터링·토픽 모델링
+
+### Track O — 실습 워크북
+
+- [101](./volume_101_dataset_workbook.md) — 데이터셋 종합 실습 워크북
 
 ---
 
@@ -152,9 +179,9 @@
 
 ### 마스터
 
-모든 86권을 순서대로 학습하고, 각 권의 자가점검 키워드와 코드를 모두 손으로 작성합니다.
+모든 104권을 순서대로 학습하고, 각 권의 자가점검 키워드와 코드를 모두 손으로 작성합니다.
 
-`Volume 1 → 2 → 3 → ... → 86`
+`Volume 1 → 2 → 3 → ... → 104`
 
 ---
 
