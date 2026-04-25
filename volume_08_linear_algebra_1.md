@@ -933,6 +933,222 @@ plt.show()
 
 ---
 
+## 9. 흔한 오해와 함정
+
+### 9.1 행렬 곱과 원소별 곱의 혼동
+
+가장 흔한 함정은 *행렬 곱 (`@`)* 과 *원소별 곱 (`*`)* 의 혼동입니다. 두 연산은 *완전히 다른 결과* 를 내며, 같은 모양의 두 행렬에 대해 둘 다 동작하므로 *오류 없이 잘못된 결과* 를 만들 수 있습니다.
+
+```python
+import numpy as np
+
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+
+print(A * B)   # 원소별 곱
+# [[ 5 12]
+#  [21 32]]
+
+print(A @ B)   # 행렬 곱
+# [[19 22]
+#  [43 50]]
+```
+
+PyTorch 도 같은 규약을 따릅니다. 두 연산을 *같이 쓰는 코드* 를 작성할 때는 *연산자 옆에 짧은 주석* 을 남기는 습관이 안전합니다.
+
+### 9.2 모양 불일치로 인한 브로드캐스팅 사고
+
+NumPy 의 브로드캐스팅은 강력하지만, *의도하지 않은 모양 매칭* 이 일어나면 *오류 없이 잘못된 결과* 를 만듭니다.
+
+```python
+a = np.array([1, 2, 3])         # (3,)
+b = np.array([[10], [20]])       # (2, 1)
+print(a + b)
+# [[11 12 13]
+#  [21 22 23]]   ← (2, 3) 결과. 의도였는가?
+```
+
+방어책: 함수 진입 시 `assert a.shape == (...)` 로 *기대 모양 명시*. 디버깅이 매우 쉬워집니다.
+
+### 9.3 정수 자료형의 함정
+
+```python
+a = np.array([1, 2, 3])         # dtype=int64
+print(a.mean())                  # 2.0  (자동 float 변환)
+print(a / 2)                      # [0.5 1.  1.5]  (자동 float)
+
+# 그러나 정수 분할
+print(a // 2)                     # [0 1 1]  (정수 나눗셈)
+```
+
+ML 코드에서는 *항상 float 자료형으로 변환* 하는 것이 안전. `a.astype(np.float32)` 또는 처음부터 `np.array([1.0, 2.0])`.
+
+### 9.4 메모리 공유의 함정
+
+NumPy 의 슬라이스는 *복사가 아닌 뷰* 를 반환합니다.
+
+```python
+a = np.array([1, 2, 3, 4, 5])
+b = a[1:4]
+b[0] = 999
+print(a)   # [1 999 3 4 5]   ← a 도 변경됨!
+```
+
+명시적 복사가 필요할 때는 `.copy()` 사용. 이 함정은 *학습 데이터를 슬라이스로 분할* 할 때 자주 만납니다.
+
+### 9.5 챕터 정리
+
+행렬 곱 vs 원소별 곱·브로드캐스팅·자료형·메모리 공유의 4 가지 함정은 *모두 한 번씩은 마주치는* 것들입니다. 함수 입력에 *모양·자료형 검증* 을 습관화하면 대부분 사전 방지할 수 있습니다.
+
+---
+
+## 10. PyTorch 텐서로 다시 보기
+
+### 10.1 NumPy → PyTorch 인터페이스의 거의 1:1 이전
+
+이 권에서 NumPy 로 다룬 모든 개념은 *거의 동일한 인터페이스* 로 PyTorch 텐서에서도 동작합니다.
+
+```python
+import torch
+import numpy as np
+
+# 거의 같은 모양·연산
+a_np = np.array([[1, 2], [3, 4]], dtype=np.float32)
+a_pt = torch.tensor([[1, 2], [3, 4]], dtype=torch.float32)
+
+print(a_np @ a_np.T)    # NumPy
+print(a_pt @ a_pt.T)    # PyTorch — 같은 결과
+
+# 변환
+a_np_back = a_pt.numpy()
+a_pt_from_np = torch.from_numpy(a_np)
+```
+
+차이는 *GPU 이동·autograd 추적* 두 가지뿐:
+
+```python
+a_pt = a_pt.to('cuda')          # GPU 이동
+a_pt.requires_grad_(True)       # 그래디언트 추적 활성화
+```
+
+NumPy 로 익힌 사고는 그대로 PyTorch 로 옮겨갑니다. 처음부터 PyTorch 만 익히는 것보다 *NumPy → PyTorch* 흐름이 학습 효율이 높습니다.
+
+### 10.2 GPU 가속의 체감
+
+작은 행렬은 NumPy 와 PyTorch (CPU) 의 속도가 비슷합니다. 그러나 큰 행렬에서는 *GPU 의 효과* 가 극적입니다.
+
+```python
+import torch, time
+
+n = 4096
+a_cpu = torch.randn(n, n)
+a_gpu = a_cpu.to('cuda') if torch.cuda.is_available() else a_cpu
+
+# CPU
+t = time.time()
+b_cpu = a_cpu @ a_cpu
+print(f"CPU: {time.time() - t:.3f}s")
+
+# GPU (CUDA 환경)
+if torch.cuda.is_available():
+    torch.cuda.synchronize()
+    t = time.time()
+    b_gpu = a_gpu @ a_gpu
+    torch.cuda.synchronize()
+    print(f"GPU: {time.time() - t:.3f}s")
+```
+
+H100 환경에서 4096×4096 행렬 곱이 *CPU 1-2 초 vs GPU 5-10 ms* 정도. 100-300 배 차이입니다.
+
+### 10.3 챕터 정리
+
+NumPy 로 익힌 모든 사고는 PyTorch 로 *거의 그대로* 이전됩니다. 추가되는 것은 *GPU 이동·autograd* 두 가지이며, 큰 행렬에서는 *GPU 효과가 100 배 이상* 입니다.
+
+---
+
+## 11. 실전 사례 모음
+
+### 11.1 사례 — 두 문서의 코사인 유사도 (실제 임베딩)
+
+가상의 임베딩이 아닌 *실제 Sentence-BERT 임베딩* 으로 코사인 유사도를 계산:
+
+```python
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+texts = [
+    "Machine learning is a subset of AI.",
+    "Deep learning uses neural networks.",
+    "Cats are wonderful pets.",
+]
+embeddings = model.encode(texts)            # (3, 384) — 자동으로 정규화 안 됨
+embeddings_norm = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
+
+# 첫 두 문장 (둘 다 ML 관련) 의 유사도
+sim_01 = embeddings_norm[0] @ embeddings_norm[1]
+# 첫 문장과 세 번째 (관계 없음) 의 유사도
+sim_02 = embeddings_norm[0] @ embeddings_norm[2]
+
+print(f"ML vs DL similarity: {sim_01:.3f}")     # 약 0.6+
+print(f"ML vs cats similarity: {sim_02:.3f}")    # 약 0.1 이하
+```
+
+`[VERIFY]` 실제 값은 모델 버전에 따라 변동.
+
+### 11.2 사례 — 신경망의 한 층을 NumPy 로 처음부터
+
+```python
+import numpy as np
+
+class LinearLayer:
+    def __init__(self, in_dim, out_dim):
+        # He 초기화 (ReLU 에 적합)
+        self.W = np.random.randn(in_dim, out_dim) * np.sqrt(2.0 / in_dim)
+        self.b = np.zeros(out_dim)
+
+    def forward(self, x):
+        # x: (batch, in_dim) → (batch, out_dim)
+        return x @ self.W + self.b
+
+# 사용
+layer = LinearLayer(10, 5)
+x = np.random.randn(32, 10)   # 배치 32, 차원 10
+y = layer.forward(x)
+print(y.shape)                # (32, 5)
+```
+
+이 8 줄이 *PyTorch `nn.Linear`* 의 핵심입니다. PyTorch 가 추가하는 것은 *autograd·GPU 이동·파라미터 관리* 뿐입니다.
+
+### 11.3 사례 — 이미지의 행렬 표현
+
+```python
+from PIL import Image
+import numpy as np
+
+img = Image.open('photo.jpg').convert('RGB')   # 자기 이미지로 교체
+arr = np.array(img)
+print(arr.shape)              # (H, W, 3) — 높이·너비·채널
+
+# 회색조로 변환 (단순 평균)
+gray = arr.mean(axis=-1)      # (H, W)
+
+# 가로 뒤집기
+flipped = arr[:, ::-1, :]
+
+# 90 도 회전
+rotated = np.rot90(arr)
+```
+
+이미지가 *NumPy 행렬* 임을 직접 확인하면, 이후 CNN·이미지 증강 같은 영역의 사고가 자연스럽게 따라옵니다.
+
+### 11.4 챕터 정리
+
+3 가지 실전 사례는 *임베딩 검색·신경망 한 층·이미지 처리* 의 핵심을 NumPy 만으로 보여 줍니다. 이 권의 모든 추상적 개념이 실제 ML 문제에 어떻게 들어가는지를 한눈에 확인할 수 있습니다.
+
+---
+
 ## 권 정리
 
 이 권에서 우리는 다음을 배웠습니다.

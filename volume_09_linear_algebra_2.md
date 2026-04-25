@@ -691,6 +691,187 @@ for step in range(500):
 
 ---
 
+## 10. SVD 의 산업 응용 사례
+
+### 10.1 LSA — 잠재 의미 분석
+
+*LSA (Latent Semantic Analysis)* 는 1990 년대에 등장한 *문서·단어 행렬에 SVD 를 적용해 잠재 토픽을 찾는* 기법입니다. *키워드 검색을 의미 기반 검색으로* 확장한 첫 시도이며, 현대 임베딩 검색 (Vol 57) 의 직접적 조상입니다.
+
+```python
+import numpy as np
+
+# 단어-문서 행렬 (TF-IDF 가중치)
+# 행: 단어, 열: 문서
+M = np.array([
+    [1, 0, 1, 0],   # "ai"
+    [1, 1, 0, 0],   # "model"
+    [0, 1, 0, 1],   # "training"
+    [0, 0, 1, 1],   # "data"
+], dtype=float)
+
+# SVD
+U, S, Vt = np.linalg.svd(M, full_matrices=False)
+
+# 상위 2 개 잠재 차원으로 축소
+k = 2
+U_k = U[:, :k]            # 단어의 잠재 표현
+S_k = S[:k]
+Vt_k = Vt[:k]              # 문서의 잠재 표현
+
+print("단어 임베딩 (잠재 2 차원):")
+print(U_k @ np.diag(S_k))
+```
+
+이 단순한 패턴이 Word2Vec·BERT 같은 현대 임베딩의 *수학적 뿌리* 입니다.
+
+### 10.2 추천 시스템의 Funk SVD
+
+Netflix Prize (2006-2009) 에서 우승한 *Funk SVD* 는 *결측치를 무시하면서 SVD 를 학습* 하는 변형입니다.
+
+```python
+import numpy as np
+
+# 평점 행렬 (0 = 미평가)
+R = np.array([
+    [5, 0, 3, 0],
+    [0, 4, 0, 5],
+    [4, 0, 0, 2],
+    [0, 5, 4, 0],
+], dtype=float)
+
+n_users, n_items = R.shape
+k = 2  # 잠재 차원
+
+# 잠재 행렬 초기화
+U = np.random.randn(n_users, k) * 0.1
+V = np.random.randn(n_items, k) * 0.1
+
+lr, reg = 0.01, 0.02
+for epoch in range(200):
+    for i in range(n_users):
+        for j in range(n_items):
+            if R[i, j] > 0:
+                pred = U[i] @ V[j]
+                err = R[i, j] - pred
+                U[i] += lr * (err * V[j] - reg * U[i])
+                V[j] += lr * (err * U[i] - reg * V[j])
+
+# 예측
+print(np.round(U @ V.T, 2))
+```
+
+이 알고리즘이 *현대 추천 시스템 (Two-Tower, Sequential, GNN)* 의 출발점입니다.
+
+### 10.3 챕터 정리
+
+SVD 의 산업 응용은 *LSA 의 의미 검색·Funk SVD 의 추천* 으로 1990-2010 년대 ML 의 중심을 차지했고, 현대 임베딩·추천의 직접적 조상입니다.
+
+---
+
+## 11. PyTorch 의 LoRA 실제 사용
+
+### 11.1 PEFT 라이브러리로 한 줄 LoRA
+
+이 권의 NumPy LoRA 시뮬레이션을 *Hugging Face PEFT* 라이브러리로 한 줄에 적용:
+
+```python
+from peft import LoraConfig, get_peft_model, TaskType
+from transformers import AutoModelForSequenceClassification
+
+base_model = AutoModelForSequenceClassification.from_pretrained(
+    'distilbert-base-uncased', num_labels=2
+)
+
+lora_config = LoraConfig(
+    task_type=TaskType.SEQ_CLS,
+    r=8,                              # LoRA rank
+    lora_alpha=16,
+    lora_dropout=0.1,
+    target_modules=['q_lin', 'v_lin'], # 어텐션의 Query·Value 만
+)
+
+model = get_peft_model(base_model, lora_config)
+model.print_trainable_parameters()
+# trainable params: ~74K || all params: 67M || trainable%: 0.11%
+```
+
+전체 파라미터의 *0.11%* 만 학습 대상이 되어, 단일 GPU 로 미세조정 가능. 학습 후 *어댑터 파일 (수 MB)* 만 저장.
+
+### 11.2 LoRA 어댑터의 합치기
+
+학습된 LoRA 어댑터는 *추론 시점에 베이스 가중치에 합쳐* 추가 비용 없이 사용 가능:
+
+```python
+merged_model = model.merge_and_unload()
+# 이제 merged_model 은 일반 모델처럼 추론 가능, LoRA 오버헤드 없음
+```
+
+이 *합치기* 기능 덕분에 LoRA 가 *학습은 가볍게, 추론은 빠르게* 의 두 마리 토끼를 잡습니다.
+
+### 11.3 챕터 정리
+
+PEFT 라이브러리로 LoRA 를 한 줄에 적용할 수 있고, 학습 후 *합치기* 로 추론 비용도 없습니다. 이 권의 NumPy 시뮬레이션이 산업 도구에서 어떻게 구현되는지를 한눈에 확인할 수 있습니다.
+
+---
+
+## 12. 흔한 함정과 트러블슈팅
+
+### 12.1 SVD 의 부호 모호성
+
+SVD 는 *고유한 분해가 아닙니다*. U 와 V 의 *부호를 동시에 뒤집어도* 같은 결과를 만듭니다.
+
+```python
+import numpy as np
+A = np.array([[1, 2], [3, 4]], dtype=float)
+U, S, Vt = np.linalg.svd(A)
+
+# U 와 V 의 첫 컬럼/행 부호를 동시에 뒤집어도
+U_alt = U.copy(); U_alt[:, 0] *= -1
+Vt_alt = Vt.copy(); Vt_alt[0, :] *= -1
+
+# 같은 A 가 복원됨
+print(np.allclose(A, U_alt @ np.diag(S) @ Vt_alt))   # True
+```
+
+따라서 *서로 다른 환경에서 같은 SVD 가 다른 부호를 출력* 할 수 있습니다. 부호에 의존하는 코드는 위험.
+
+### 12.2 PCA 의 데이터 중심화 누락
+
+PCA 는 *데이터를 평균 중심으로 옮긴 후* 적용해야 합니다. 중심화하지 않으면 *주성분이 평균 방향에 의해 왜곡* 됩니다.
+
+```python
+X = np.random.randn(100, 5) + 100  # 평균이 100 인 데이터
+
+# 잘못된 PCA (중심화 누락)
+U, S, Vt = np.linalg.svd(X, full_matrices=False)
+# → 첫 주성분이 '100 방향' 을 가리킴
+
+# 올바른 PCA
+X_centered = X - X.mean(axis=0)
+U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)
+# → 첫 주성분이 '실제 분산이 가장 큰 방향'
+```
+
+scikit-learn 의 `PCA` 클래스는 *내부적으로 자동 중심화* 하지만, 직접 SVD 를 부를 때는 명시적 중심화가 필요합니다.
+
+### 12.3 LoRA rank 선택
+
+LoRA 의 `r` 값이 너무 작으면 *충분히 학습되지 않고*, 너무 크면 *전체 미세조정과 차이가 없어집니다*.
+
+산업 표준 권장:
+- *작은 도메인 적응* — r = 4 ~ 8
+- *중간 도메인 (스타일·말투)* — r = 16 ~ 32
+- *깊은 능력 추가* — r = 64 ~ 128
+- *전체에 가까운 적응* — Full Fine-Tuning 검토
+
+`[VERIFY: PEFT 공식 가이드 확인]`
+
+### 12.4 챕터 정리
+
+SVD 의 부호 모호성·PCA 의 중심화 누락·LoRA rank 선택은 모두 *결과를 미묘하게 망가뜨리는* 함정입니다. 미리 알아 두면 *디버깅 시간을 크게 절약* 할 수 있습니다.
+
+---
+
 ## 권 정리
 
 이 권에서 우리는 다음을 배웠습니다.

@@ -971,6 +971,277 @@ git 은 코드·설정·평가 셋·문서를 버저닝하고, Git LFS·DVC·Hug
 
 ---
 
+## 10. 도구 선택 의사결정 흐름
+
+### 10.1 새 프로젝트의 첫 도구 선택
+
+새 AI 프로젝트를 시작할 때 *어떤 도구부터 결정해야 하는가* 의 표준 흐름이 있습니다. 이 흐름을 따라가면 도구 선택에 시간을 쓰지 않고 바로 본 작업으로 들어갈 수 있습니다.
+
+**1 단계 — Python 환경.** 가상환경 도구 선택 (uv 권장), Python 3.11+ 고정. `pyproject.toml` 에 의존성 명시. 5 분.
+
+**2 단계 — 모델 선택.** 외부 API (OpenAI/Anthropic) 또는 오픈 모델 (Hugging Face) 중 하나. 프로토타입 단계는 외부 API 가 빠르고, 프로덕션은 비용·프라이버시 분석 후 결정. 30 분.
+
+**3 단계 — 프레임워크 결정.** PyTorch + transformers 가 기본. 그 위에 LangChain·LlamaIndex 같은 고수준 프레임워크를 더할지는 프로젝트 성격에 따라. 1 시간.
+
+**4 단계 — 실험 추적.** W&B 무료 플랜 또는 MLflow 자체 호스팅. 학습이 시작되기 전에 반드시 설정. 30 분.
+
+**5 단계 — 데이터 도구.** 데이터 양이 100GB 미만이면 git-lfs, 그 이상이면 DVC. 1 시간.
+
+**6 단계 — 개발 환경.** 탐색 단계는 Jupyter, 본격 개발은 VS Code. 팀 공유 환경은 DevContainer.
+
+이 흐름은 *6 가지 결정을 3-4 시간 안에* 끝낼 수 있게 합니다. 각 결정에 *완벽한 답* 을 찾으려고 며칠을 쓰는 것보다, *합리적 기본값* 을 빠르게 정한 뒤 작업 중 필요할 때 교체하는 것이 더 효율적입니다.
+
+### 10.2 도구 교체 시점
+
+한 번 정한 도구도 영원하지 않습니다. 다음 신호가 보이면 교체를 검토합니다.
+
+- *유지 보수 중단* — 마지막 릴리스가 1 년 이상 없음
+- *대안이 명확히 우월* — 같은 기능 + 더 빠름 + 더 단순
+- *비용이 누적* — 외부 API 비용이 자체 운영 비용을 크게 초과
+- *팀 역량 변화* — 새 인력 합류로 다른 도구를 더 잘 다루는 사람이 들어옴
+- *공식 권장 변경* — 라이브러리 메인테이너가 후속 도구로 마이그레이션 권장
+
+교체 결정은 *RFC* 로 문서화하고 (Vol 7 참조) 팀 합의를 거치는 것이 안전합니다.
+
+### 10.3 도구 의사결정 매트릭스 — 한 장 요약
+
+```
++----------+---------------------+---------------------+
+| 영역     | 입문 권장           | 프로덕션 권장        |
++----------+---------------------+---------------------+
+| 가상환경  | venv                | uv                  |
+| 모델 호출 | OpenAI API          | vLLM + 오픈 모델    |
+| 임베딩    | OpenAI Embedding    | Sentence-BERT 자체  |
+| 벡터 DB   | FAISS (메모리)      | Qdrant / pgvector  |
+| RAG 체인  | LangChain (단순)    | 직접 구현           |
+| 실험 추적 | W&B 무료            | MLflow 자체 호스팅  |
+| 관측성    | Helicone            | Langfuse 자체       |
+| 개발 환경 | Jupyter + Colab     | VS Code + 자체 GPU  |
+| 배포      | FastAPI + 단일 GPU  | vLLM + K8s          |
++----------+---------------------+---------------------+
+```
+
+이 표는 *시작점* 입니다. 자기 환경의 제약 (예산·인력·규제) 에 맞춰 조정합니다.
+
+### 10.4 챕터 정리
+
+도구 선택의 6 단계 흐름을 따르면 *몇 시간 안에 합리적 기본값* 을 정할 수 있습니다. 한 번 정한 도구도 *5 가지 신호* 가 보이면 교체를 검토하며, 큰 교체는 RFC 로 합의합니다.
+
+---
+
+## 11. 흔한 함정과 트러블슈팅
+
+### 11.1 환경·설치 함정
+
+지금까지의 챕터에서 부분적으로 언급된 함정들을 한 자리에 모읍니다.
+
+**함정 1 — 시스템 Python 오염.** `pip install` 을 가상환경 없이 실행. 시스템 Python 의 의존성이 깨져 OS 기능까지 영향. 대응: *항상 가상환경 활성화 후 설치*. 의심되면 `which python` 으로 경로 확인.
+
+**함정 2 — CUDA 버전 불일치.** PyTorch 가 `torch.cuda.is_available() == False`. NVIDIA 드라이버는 정상이지만 PyTorch 빌드 CUDA 와 호환되지 않음. 대응: `nvidia-smi` 로 드라이버 확인 → [pytorch.org](https://pytorch.org) 의 *Get Started* 페이지에서 정확한 설치 명령 다시 받기.
+
+**함정 3 — 의존성 충돌.** `pip install` 로 한 패키지 설치 후 다른 패키지가 깨짐. 대응: 가상환경 처음부터 다시 만드는 것이 가장 빠름. uv 또는 poetry 의 *의존성 잠금* 으로 사전 방지.
+
+**함정 4 — 메모리 부족 (CPU/GPU).** 큰 모델 로드 시 OOM. 대응: 모델 사이즈·배치·시퀀스 길이를 *손으로 계산* 한 뒤 적재. 양자화 (FP16, INT8) 적용. KV 캐시 크기 제한.
+
+**함정 5 — 디스크 공간 고갈.** Hugging Face 캐시가 수백 GB 로 부풀어 디스크가 가득 참. 대응: `~/.cache/huggingface` 정기 정리, `HF_HOME` 환경 변수로 캐시 위치 변경.
+
+### 11.2 학습·실험 함정
+
+**함정 6 — 시드 미고정.** 같은 코드를 두 번 돌렸는데 결과가 다름. 대응: `torch.manual_seed`, `numpy.random.seed`, `random.seed` 모두 설정. CUDA 도 결정론적 모드로 (`torch.backends.cudnn.deterministic = True`).
+
+**함정 7 — 학습 데이터 누수.** 검증·테스트 데이터가 학습 데이터에 섞여 평가 결과가 비현실적으로 좋음. 대응: 데이터 분할을 *시간 기반·해시 기반* 으로 명시. `train_test_split` 의 `random_state` 고정.
+
+**함정 8 — 그래디언트 폭발/소실.** 학습 도중 손실이 NaN 으로 바뀜. 대응: 학습률 낮추기, 그래디언트 클리핑 (`clip_grad_norm_`), 데이터 전처리 점검 (입력에 NaN/Inf 가 없는지).
+
+**함정 9 — 실험 추적 누락.** 좋은 결과가 나왔는데 *어떤 설정으로 돌렸는지* 기억나지 않음. 대응: W&B / MLflow 를 *학습 시작 전에* 설정. 모든 하이퍼파라미터·코드 버전·데이터 버전을 함께 기록.
+
+**함정 10 — 모델 카드 누락.** 학습된 모델을 다른 사람에게 전달하면서 *어떻게 쓰는지* 의 안내가 없음. 대응: 모델 카드 템플릿을 사내에 정해 두고 *학습 완료 시 의무 작성*.
+
+### 11.3 운영 함정
+
+**함정 11 — 캐시 무효화 실수.** 새 모델로 갈아탔는데 캐시가 옛 응답을 반환. 대응: 캐시 키에 *모델 버전·프롬프트 해시* 포함. 모델 갱신 시 캐시 자동 무효화.
+
+**함정 12 — 비용 폭증.** 외부 API 호출이 *루프 안에* 잘못 들어가 토큰 비용이 수천 배 증가. 대응: API 호출에 *예산 한도* 설정. 일일/시간당 호출 수 모니터링·알람.
+
+**함정 13 — 데이터 프라이버시 위반.** 사용자 입력에 PII 가 포함되어 있는데 외부 API 로 그대로 전송. 대응: PII 검출·마스킹 미들웨어를 모든 외부 API 호출 앞에 배치.
+
+**함정 14 — 모델 응답 무한 루프.** 에이전트가 도구 호출 → 도구 호출 → 무한 반복. 대응: 호출 횟수 제한 + 타임아웃. 동일 도구 호출 패턴 감지 시 강제 종료.
+
+**함정 15 — Drift 감지 누락.** 모델이 시간이 지나면서 정확도가 떨어지는데 모니터링이 없어 문제를 놓침. 대응: 정기 평가 셋 자동 실행 + 임계값 미달 시 알람.
+
+### 11.4 챕터 정리
+
+15 가지 함정은 모두 *한 번씩은 마주치는* 것들이며, 미리 알아 두면 시간을 크게 절약합니다. 환경·학습·운영의 세 단계로 분류해 *팀의 체크리스트* 로 활용하시기 바랍니다.
+
+---
+
+## 12. 실전 사례 모음
+
+### 12.1 사례 — 로컬 노트북에 PyTorch + Hugging Face 환경 구축
+
+가장 자주 만나는 시나리오. 신규 학습자의 *맥북 또는 윈도우 노트북* 에 처음 환경을 설정하는 흐름.
+
+```bash
+# 1. Python 가상환경
+mkdir my-ai-project && cd my-ai-project
+python3.11 -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+
+# 2. PyTorch 설치 (CPU 기준, GPU 있으면 CUDA 빌드)
+pip install --upgrade pip
+pip install torch torchvision torchaudio
+
+# 3. Hugging Face
+pip install transformers datasets accelerate
+
+# 4. Jupyter
+pip install jupyter ipython
+
+# 5. 실험 추적 (W&B)
+pip install wandb
+wandb login  # API 키 입력
+
+# 6. 검증
+python -c "
+import torch, transformers
+print(f'torch {torch.__version__}, cuda={torch.cuda.is_available()}')
+print(f'transformers {transformers.__version__}')
+"
+```
+
+이 6 단계가 약 10-15 분 소요. 검증 출력이 정상이면 다음 권의 모든 코드가 작동합니다.
+
+### 12.2 사례 — 작은 분류 모델 학습 + W&B 추적
+
+영화 리뷰 감정 분석을 W&B 로 추적하면서 학습하는 한 화면 코드:
+
+```python
+# train_imdb.py
+import torch, wandb
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from datasets import load_dataset
+from torch.utils.data import DataLoader
+
+wandb.init(project='imdb-sentiment', config={
+    'model': 'distilbert-base-uncased',
+    'lr': 2e-5,
+    'batch_size': 16,
+    'epochs': 3,
+})
+
+# 1. 데이터
+ds = load_dataset('imdb')
+tokenizer = AutoTokenizer.from_pretrained(wandb.config.model)
+def tokenize(b): return tokenizer(b['text'], padding='max_length',
+                                   truncation=True, max_length=256)
+train_ds = ds['train'].map(tokenize, batched=True)
+train_ds.set_format('torch', columns=['input_ids', 'attention_mask', 'label'])
+
+# 2. 모델·옵티마이저
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model = AutoModelForSequenceClassification.from_pretrained(
+    wandb.config.model, num_labels=2).to(device)
+optimizer = torch.optim.AdamW(model.parameters(), lr=wandb.config.lr)
+
+# 3. 학습 루프
+loader = DataLoader(train_ds, batch_size=wandb.config.batch_size, shuffle=True)
+for epoch in range(wandb.config.epochs):
+    for step, batch in enumerate(loader):
+        batch = {k: v.to(device) for k, v in batch.items()}
+        outputs = model(**batch, labels=batch['label'])
+        outputs.loss.backward()
+        optimizer.step(); optimizer.zero_grad()
+        if step % 50 == 0:
+            wandb.log({'loss': outputs.loss.item(), 'epoch': epoch, 'step': step})
+
+wandb.finish()
+```
+
+실행 결과: W&B 대시보드에서 손실 곡선·하이퍼파라미터·시스템 사용률이 실시간 시각화. 학습 1 회 약 15-30 분 (GPU 환경 기준).
+
+### 12.3 사례 — DVC 로 데이터 + 모델 버저닝
+
+```bash
+# 초기화
+dvc init
+dvc remote add -d s3-storage s3://my-team/dvc-storage
+
+# 데이터 추적
+dvc add data/train.csv
+git add data/train.csv.dvc data/.gitignore
+git commit -m "add training data v1"
+dvc push
+
+# 모델 추적
+dvc add models/v1.pt
+git add models/v1.pt.dvc
+git commit -m "add model v1"
+dvc push
+
+# 다른 팀원이 받기
+git pull
+dvc pull  # 자동으로 S3 에서 다운로드
+```
+
+이 흐름이 정착되면 *어떤 git commit 의 코드 + 어떤 데이터 + 어떤 모델* 의 조합인지 항상 추적 가능합니다.
+
+### 12.4 사례 — Hugging Face Hub 에 자기 모델 공유
+
+```bash
+# 로그인
+huggingface-cli login
+
+# 빈 레포 생성
+huggingface-cli repo create my-classifier --type model
+
+# 클론·푸시
+git clone https://huggingface.co/your-username/my-classifier
+cp ./trained_model/* my-classifier/
+cd my-classifier
+echo "# My Classifier\n\n학습 데이터: IMDB\n정확도: 92%" > README.md
+git lfs install
+git add .
+git commit -m "initial release"
+git push
+```
+
+이후 다른 사람은 `from_pretrained('your-username/my-classifier')` 한 줄로 모델을 사용할 수 있습니다.
+
+### 12.5 사례 — 클라우드 GPU 에서 빠른 실험
+
+Lambda Labs 인스턴스에 SSH 접속해 학습을 돌리는 흐름:
+
+```bash
+# 1. Lambda 콘솔에서 H100 인스턴스 시작 (시간당 ~$2)
+
+# 2. SSH 접속
+ssh ubuntu@<instance-ip>
+
+# 3. 환경 동기화 (rsync 또는 git clone)
+git clone https://github.com/myorg/my-ai-project.git
+cd my-ai-project
+
+# 4. 학습 시작
+nohup python train.py > train.log 2>&1 &
+
+# 5. 진행 모니터링 (다른 터미널에서)
+tail -f train.log
+nvidia-smi -l 5  # 5 초마다 GPU 상태
+
+# 6. 완료 후 모델·로그 다운로드
+scp -r ubuntu@<instance-ip>:my-ai-project/checkpoints ./
+
+# 7. 인스턴스 종료 (비용 정지)
+```
+
+이 흐름을 *셸 스크립트로 자동화* 해 두면 매번 설정 없이 빠르게 실험할 수 있습니다.
+
+### 12.6 챕터 정리
+
+5 가지 실전 사례는 *입문 학습부터 프로덕션 흉내까지* 의 모든 단계를 다룹니다. 각 사례를 *자기 환경에서 직접 한 번* 실행해 보면, 이후 새 프로젝트의 환경 설정에 시간이 거의 들지 않게 됩니다.
+
+---
+
 ## 권 정리
 
 이 권에서 우리는 다음을 배웠습니다.
