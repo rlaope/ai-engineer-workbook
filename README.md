@@ -12,152 +12,152 @@
 
 ### Track A — 입문과 직무 지형
 
-- [01](./volume_01_what_is_ai_engineer.md) — AI 엔지니어라는 직업의 본질
-- [02](./volume_02_ai_ml_dl_landscape.md) — AI·ML·DL의 관계와 현대 AI의 큰 그림
-- [03](./volume_03_toolchain.md) — 도구 체인과 작업 환경
-- [51](./volume_51_collaboration.md) — 협업과 의사소통
-- [52](./volume_52_ethics.md) — AI 엔지니어의 윤리와 책임
-- [53](./volume_53_info_tracking.md) — 정보 추적 시스템
-- [92](./volume_92_ai_app_planning.md) — AI 애플리케이션 기획·PRD
+- [01 — AI 엔지니어라는 직업의 본질](./volume_01_what_is_ai_engineer.md)
+- [02 — AI·ML·DL의 관계와 현대 AI의 큰 그림](./volume_02_ai_ml_dl_landscape.md)
+- [03 — 도구 체인과 작업 환경](./volume_03_toolchain.md)
+- [51 — 협업과 의사소통](./volume_51_collaboration.md)
+- [52 — AI 엔지니어의 윤리와 책임](./volume_52_ethics.md)
+- [53 — 정보 추적 시스템](./volume_53_info_tracking.md)
+- [92 — AI 애플리케이션 기획·PRD](./volume_92_ai_app_planning.md)
 
 ### Track B — 수학과 과학 컴퓨팅
 
-- [04](./volume_04_linear_algebra_1.md) — 선형대수 1 — 벡터·행렬·내적·노름
-- [05](./volume_05_linear_algebra_2.md) — 선형대수 2 — 행렬 분해·고유값·SVD
-- [06](./volume_06_calculus_gradient.md) — 미적분과 그래디언트
-- [07](./volume_07_probability_statistics.md) — 확률과 통계
-- [08](./volume_08_information_theory.md) — 정보 이론
-- [09](./volume_09_numpy.md) — NumPy로 다시 푸는 수학
-- [54](./volume_54_numerical.md) — 수치 해석과 부동소수점
-- [55](./volume_55_optimization.md) — 최적화 이론
-- [56](./volume_56_stochastic_process.md) — 확률 과정 — Markov·SDE
-- [102](./volume_102_learning_theory.md) — 통계적 학습 이론
-- [103](./volume_103_information_geometry.md) — 정보 기하와 매니폴드
-- [104](./volume_104_graph_spectral.md) — 그래프 이론과 스펙트럴 방법
+- [04 — 선형대수 1 — 벡터·행렬·내적·노름](./volume_04_linear_algebra_1.md)
+- [05 — 선형대수 2 — 행렬 분해·고유값·SVD](./volume_05_linear_algebra_2.md)
+- [06 — 미적분과 그래디언트](./volume_06_calculus_gradient.md)
+- [07 — 확률과 통계](./volume_07_probability_statistics.md)
+- [08 — 정보 이론](./volume_08_information_theory.md)
+- [09 — NumPy로 다시 푸는 수학](./volume_09_numpy.md)
+- [54 — 수치 해석과 부동소수점](./volume_54_numerical.md)
+- [55 — 최적화 이론](./volume_55_optimization.md)
+- [56 — 확률 과정 — Markov·SDE](./volume_56_stochastic_process.md)
+- [102 — 통계적 학습 이론](./volume_102_learning_theory.md)
+- [103 — 정보 기하와 매니폴드](./volume_103_information_geometry.md)
+- [104 — 그래프 이론과 스펙트럴 방법](./volume_104_graph_spectral.md)
 
 ### Track C — 머신러닝
 
-- [10](./volume_10_machine_learning_essence.md) — 머신러닝의 본질과 학습 패러다임
-- [11](./volume_11_regression.md) — 회귀
-- [12](./volume_12_classification.md) — 분류
-- [13](./volume_13_ensemble.md) — 앙상블
-- [14](./volume_14_svm_kernel.md) — SVM과 커널 방법
-- [15](./volume_15_unsupervised.md) — 비지도학습
-- [16](./volume_16_dimensionality_reduction.md) — 차원 축소와 시각화
-- [57](./volume_57_feature_engineering.md) — 특성 공학
-- [58](./volume_58_bayesian_ml.md) — 베이지안 머신러닝
-- [59](./volume_59_hpo.md) — 하이퍼파라미터 탐색
+- [10 — 머신러닝의 본질과 학습 패러다임](./volume_10_machine_learning_essence.md)
+- [11 — 회귀](./volume_11_regression.md)
+- [12 — 분류](./volume_12_classification.md)
+- [13 — 앙상블](./volume_13_ensemble.md)
+- [14 — SVM과 커널 방법](./volume_14_svm_kernel.md)
+- [15 — 비지도학습](./volume_15_unsupervised.md)
+- [16 — 차원 축소와 시각화](./volume_16_dimensionality_reduction.md)
+- [57 — 특성 공학](./volume_57_feature_engineering.md)
+- [58 — 베이지안 머신러닝](./volume_58_bayesian_ml.md)
+- [59 — 하이퍼파라미터 탐색](./volume_59_hpo.md)
 
 ### Track D — 딥러닝 핵심
 
-- [17](./volume_17_perceptron.md) — 퍼셉트론과 신경망의 기원
-- [18](./volume_18_mlp_universal_approx.md) — MLP와 유니버설 근사
-- [19](./volume_19_backprop_autograd.md) — 역전파와 자동미분
-- [20](./volume_20_optimizers.md) — 옵티마이저
-- [21](./volume_21_normalization.md) — 정규화 (Normalization)
-- [22](./volume_22_regularization.md) — 정칙화 (Regularization)
-- [23](./volume_23_pytorch_practice.md) — PyTorch 실전
-- [24](./volume_24_data_pipeline.md) — 데이터 파이프라인과 실험 관리
-- [25](./volume_25_evaluation_metrics.md) — 모델 평가와 메트릭
-- [60](./volume_60_activations.md) — 활성화 함수 깊이
-- [61](./volume_61_lr_schedules.md) — 학습률 스케줄 깊이
-- [62](./volume_62_dl_debugging.md) — 딥러닝 디버깅
+- [17 — 퍼셉트론과 신경망의 기원](./volume_17_perceptron.md)
+- [18 — MLP와 유니버설 근사](./volume_18_mlp_universal_approx.md)
+- [19 — 역전파와 자동미분](./volume_19_backprop_autograd.md)
+- [20 — 옵티마이저](./volume_20_optimizers.md)
+- [21 — 정규화 (Normalization)](./volume_21_normalization.md)
+- [22 — 정칙화 (Regularization)](./volume_22_regularization.md)
+- [23 — PyTorch 실전](./volume_23_pytorch_practice.md)
+- [24 — 데이터 파이프라인과 실험 관리](./volume_24_data_pipeline.md)
+- [25 — 모델 평가와 메트릭](./volume_25_evaluation_metrics.md)
+- [60 — 활성화 함수 깊이](./volume_60_activations.md)
+- [61 — 학습률 스케줄 깊이](./volume_61_lr_schedules.md)
+- [62 — 딥러닝 디버깅](./volume_62_dl_debugging.md)
 
 ### Track E — 컴퓨터 비전
 
-- [26](./volume_26_cnn.md) — 합성곱 신경망(CNN)
-- [27](./volume_27_cnn_lineage.md) — CNN 모델 계보
-- [28](./volume_28_detection_segmentation.md) — 객체 탐지와 세그멘테이션
-- [29](./volume_29_vit.md) — Vision Transformer (ViT)
-- [63](./volume_63_augmentation.md) — 데이터 증강 깊이
-- [64](./volume_64_ssl_vision.md) — 자가지도 비전
-- [65](./volume_65_multimodal_vl.md) — 멀티모달 비전-언어
+- [26 — 합성곱 신경망(CNN)](./volume_26_cnn.md)
+- [27 — CNN 모델 계보](./volume_27_cnn_lineage.md)
+- [28 — 객체 탐지와 세그멘테이션](./volume_28_detection_segmentation.md)
+- [29 — Vision Transformer (ViT)](./volume_29_vit.md)
+- [63 — 데이터 증강 깊이](./volume_63_augmentation.md)
+- [64 — 자가지도 비전](./volume_64_ssl_vision.md)
+- [65 — 멀티모달 비전-언어](./volume_65_multimodal_vl.md)
 
 ### Track F — 시퀀스와 트랜스포머
 
-- [30](./volume_30_rnn_lstm.md) — RNN·LSTM·GRU와 그 한계
-- [31](./volume_31_attention.md) — Attention 메커니즘
-- [32](./volume_32_transformer.md) — Transformer 완전 정복
-- [66](./volume_66_long_context.md) — Long Context 기법
-- [67](./volume_67_moe.md) — Mixture of Experts (MoE)
-- [68](./volume_68_efficient_attention.md) — 효율적 어텐션 변형
+- [30 — RNN·LSTM·GRU와 그 한계](./volume_30_rnn_lstm.md)
+- [31 — Attention 메커니즘](./volume_31_attention.md)
+- [32 — Transformer 완전 정복](./volume_32_transformer.md)
+- [66 — Long Context 기법](./volume_66_long_context.md)
+- [67 — Mixture of Experts (MoE)](./volume_67_moe.md)
+- [68 — 효율적 어텐션 변형](./volume_68_efficient_attention.md)
 
 ### Track G — 임베딩과 벡터 검색
 
-- [33](./volume_33_word_embedding.md) — 단어 임베딩
-- [34](./volume_34_sentence_embedding.md) — 문장·문서 임베딩
-- [35](./volume_35_vector_search.md) — 벡터 검색과 ANN
-- [69](./volume_69_multimodal_embedding.md) — 멀티모달 임베딩
-- [70](./volume_70_embedding_eval.md) — 임베딩 평가와 벤치마크
-- [71](./volume_71_reranker.md) — Reranker 깊이
-- [99](./volume_99_embedding_training.md) — 임베딩 모델 직접 학습
+- [33 — 단어 임베딩](./volume_33_word_embedding.md)
+- [34 — 문장·문서 임베딩](./volume_34_sentence_embedding.md)
+- [35 — 벡터 검색과 ANN](./volume_35_vector_search.md)
+- [69 — 멀티모달 임베딩](./volume_69_multimodal_embedding.md)
+- [70 — 임베딩 평가와 벤치마크](./volume_70_embedding_eval.md)
+- [71 — Reranker 깊이](./volume_71_reranker.md)
+- [99 — 임베딩 모델 직접 학습](./volume_99_embedding_training.md)
 
 ### Track H — 대규모 언어 모델 (LLM)
 
-- [36](./volume_36_tokenizer.md) — 토크나이저
-- [37](./volume_37_llm_pretraining.md) — LLM 사전학습과 스케일링 법칙
-- [38](./volume_38_llm_alignment.md) — LLM 정렬
-- [39](./volume_39_prompting.md) — 프롬프트와 In-Context Learning
-- [40](./volume_40_rag.md) — RAG — 검색 증강 생성
-- [72](./volume_72_decoding.md) — LLM 디코딩 알고리즘
-- [73](./volume_73_model_sizing.md) — 모델 사이즈 의사결정
-- [74](./volume_74_constrained_gen.md) — Constrained Generation
-- [87](./volume_87_defensive_prompting.md) — 방어적 프롬프트 엔지니어링
-- [91](./volume_91_llm_as_judge.md) — LLM-as-Judge 평가 자동화
+- [36 — 토크나이저](./volume_36_tokenizer.md)
+- [37 — LLM 사전학습과 스케일링 법칙](./volume_37_llm_pretraining.md)
+- [38 — LLM 정렬](./volume_38_llm_alignment.md)
+- [39 — 프롬프트와 In-Context Learning](./volume_39_prompting.md)
+- [40 — RAG — 검색 증강 생성](./volume_40_rag.md)
+- [72 — LLM 디코딩 알고리즘](./volume_72_decoding.md)
+- [73 — 모델 사이즈 의사결정](./volume_73_model_sizing.md)
+- [74 — Constrained Generation](./volume_74_constrained_gen.md)
+- [87 — 방어적 프롬프트 엔지니어링](./volume_87_defensive_prompting.md)
+- [91 — LLM-as-Judge 평가 자동화](./volume_91_llm_as_judge.md)
 
 ### Track I — AI Agent
 
-- [41](./volume_41_agent_essence.md) — 에이전트의 본질
-- [42](./volume_42_agent_frameworks.md) — 에이전트 프레임워크
-- [43](./volume_43_multi_agent.md) — 멀티에이전트와 워크플로
-- [75](./volume_75_agent_memory.md) — Agent Memory 시스템
-- [76](./volume_76_agent_eval.md) — Agent 평가와 벤치마크
-- [77](./volume_77_computer_use.md) — Computer Use·Browser Agent
+- [41 — 에이전트의 본질](./volume_41_agent_essence.md)
+- [42 — 에이전트 프레임워크](./volume_42_agent_frameworks.md)
+- [43 — 멀티에이전트와 워크플로](./volume_43_multi_agent.md)
+- [75 — Agent Memory 시스템](./volume_75_agent_memory.md)
+- [76 — Agent 평가와 벤치마크](./volume_76_agent_eval.md)
+- [77 — Computer Use·Browser Agent](./volume_77_computer_use.md)
 
 ### Track J — 생성 모델
 
-- [44](./volume_44_gan.md) — GAN과 적대적 학습
-- [45](./volume_45_vae.md) — VAE와 잠재 변수 모델
-- [46](./volume_46_image_diffusion.md) — Image Diffusion
-- [78](./volume_78_generation_control.md) — 생성 제어 기법
-- [79](./volume_79_img2img.md) — Image-to-Image·Inpainting·Outpainting
-- [80](./volume_80_video_3d.md) — 비디오·3D 생성
+- [44 — GAN과 적대적 학습](./volume_44_gan.md)
+- [45 — VAE와 잠재 변수 모델](./volume_45_vae.md)
+- [46 — Image Diffusion](./volume_46_image_diffusion.md)
+- [78 — 생성 제어 기법](./volume_78_generation_control.md)
+- [79 — Image-to-Image·Inpainting·Outpainting](./volume_79_img2img.md)
+- [80 — 비디오·3D 생성](./volume_80_video_3d.md)
 
 ### Track K — GPU와 추론 가속
 
-- [47](./volume_47_gpu_cuda.md) — GPU 아키텍처와 CUDA
-- [48](./volume_48_inference_optimization.md) — 추론 최적화
-- [49](./volume_49_serving_systems.md) — 추론 서빙 시스템
-- [81](./volume_81_kv_cache.md) — KV 캐시 깊이
-- [82](./volume_82_speculative.md) — Speculative Decoding
-- [83](./volume_83_distributed_training.md) — 분산 학습
-- [98](./volume_98_accelerators.md) — AI 가속기 비교 — GPU·TPU·Trainium·Cerebras·Groq
-- [100](./volume_100_cuda_python.md) — CUDA Python 입문 — Numba·CuPy·Triton
+- [47 — GPU 아키텍처와 CUDA](./volume_47_gpu_cuda.md)
+- [48 — 추론 최적화](./volume_48_inference_optimization.md)
+- [49 — 추론 서빙 시스템](./volume_49_serving_systems.md)
+- [81 — KV 캐시 깊이](./volume_81_kv_cache.md)
+- [82 — Speculative Decoding](./volume_82_speculative.md)
+- [83 — 분산 학습](./volume_83_distributed_training.md)
+- [98 — AI 가속기 비교 — GPU·TPU·Trainium·Cerebras·Groq](./volume_98_accelerators.md)
+- [100 — CUDA Python 입문 — Numba·CuPy·Triton](./volume_100_cuda_python.md)
 
 ### Track L — 운영과 책임
 
-- [50](./volume_50_ops_governance.md) — AI 시스템의 운영·관측·비용·거버넌스
-- [84](./volume_84_monitoring_deep.md) — 모델 모니터링 깊이
-- [85](./volume_85_postmortem.md) — AI 인시던트 사후 분석
-- [86](./volume_86_data_governance.md) — 데이터 거버넌스·라벨링
-- [90](./volume_90_system_architecture.md) — AI 시스템 아키텍처 종합
-- [97](./volume_97_user_feedback.md) — 사용자 피드백 시스템
+- [50 — AI 시스템의 운영·관측·비용·거버넌스](./volume_50_ops_governance.md)
+- [84 — 모델 모니터링 깊이](./volume_84_monitoring_deep.md)
+- [85 — AI 인시던트 사후 분석](./volume_85_postmortem.md)
+- [86 — 데이터 거버넌스·라벨링](./volume_86_data_governance.md)
+- [90 — AI 시스템 아키텍처 종합](./volume_90_system_architecture.md)
+- [97 — 사용자 피드백 시스템](./volume_97_user_feedback.md)
 
 ### Track M — 미세조정과 적응
 
-- [88](./volume_88_peft.md) — PEFT — LoRA·QLoRA·Adapter·Prompt Tuning
-- [94](./volume_94_model_merging.md) — 모델 병합과 멀티태스크
+- [88 — PEFT — LoRA·QLoRA·Adapter·Prompt Tuning](./volume_88_peft.md)
+- [94 — 모델 병합과 멀티태스크](./volume_94_model_merging.md)
 
 ### Track N — 데이터·NLP 응용
 
-- [89](./volume_89_dataset_engineering.md) — 데이터셋 엔지니어링 종합
-- [93](./volume_93_ner.md) — NER·정보 추출
-- [95](./volume_95_text_classification_compare.md) — 텍스트 분류 4 접근 비교
-- [96](./volume_96_text_clustering.md) — 텍스트 클러스터링·토픽 모델링
+- [89 — 데이터셋 엔지니어링 종합](./volume_89_dataset_engineering.md)
+- [93 — NER·정보 추출](./volume_93_ner.md)
+- [95 — 텍스트 분류 4 접근 비교](./volume_95_text_classification_compare.md)
+- [96 — 텍스트 클러스터링·토픽 모델링](./volume_96_text_clustering.md)
 
 ### Track O — 실습 워크북
 
-- [101](./volume_101_dataset_workbook.md) — 데이터셋 종합 실습 워크북
+- [101 — 데이터셋 종합 실습 워크북](./volume_101_dataset_workbook.md)
 
 ---
 
