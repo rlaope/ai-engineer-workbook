@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 104 — 그래프 이론과 스펙트럴 방법](./volume_19_graph_spectral.md)
+[Volume 19 — 그래프 이론과 스펙트럴 방법](./volume_19_graph_spectral.md)

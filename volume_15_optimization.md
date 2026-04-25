@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 56 — 확률 과정 — Markov·SDE](./volume_16_stochastic_process.md)
+[Volume 16 — 확률 과정 — Markov·SDE](./volume_16_stochastic_process.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 59 — 하이퍼파라미터 탐색](./volume_29_hpo.md)
+[Volume 29 — 하이퍼파라미터 탐색](./volume_29_hpo.md)

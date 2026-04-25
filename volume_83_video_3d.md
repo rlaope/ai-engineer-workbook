@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 81 — KV 캐시 깊이](./volume_87_kv_cache.md)
+[Volume 87 — KV 캐시 깊이](./volume_87_kv_cache.md)

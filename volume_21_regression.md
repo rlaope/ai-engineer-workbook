@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 12 — 분류](./volume_22_classification.md)
+[Volume 22 — 분류](./volume_22_classification.md)

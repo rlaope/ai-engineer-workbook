@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 30 — RNN·LSTM·GRU 와 그 한계](./volume_49_rnn_lstm.md)
+[Volume 49 — RNN·LSTM·GRU 와 그 한계](./volume_49_rnn_lstm.md)

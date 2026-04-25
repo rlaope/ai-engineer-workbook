@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 49 — 추론 서빙 시스템](./volume_86_serving_systems.md)
+[Volume 86 — 추론 서빙 시스템](./volume_86_serving_systems.md)

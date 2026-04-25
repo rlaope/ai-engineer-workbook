@@ -37,4 +37,4 @@
 
 ## 다음 권
 
-[Volume 19 — 역전파와 자동미분](./volume_32_backprop_autograd.md)
+[Volume 32 — 역전파와 자동미분](./volume_32_backprop_autograd.md)

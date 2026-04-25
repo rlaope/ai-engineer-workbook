@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 72 — LLM 디코딩 알고리즘](./volume_67_decoding.md)
+[Volume 67 — LLM 디코딩 알고리즘](./volume_67_decoding.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 65 — 멀티모달 비전-언어](./volume_48_multimodal_vl.md)
+[Volume 48 — 멀티모달 비전-언어](./volume_48_multimodal_vl.md)

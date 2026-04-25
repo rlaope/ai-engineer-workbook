@@ -39,4 +39,4 @@ NVIDIA GPU 가 사실상 표준이지만, TPU·Trainium·Inferentia·Cerebras·G
 
 ## 다음 권
 
-[Volume 99 — 임베딩 모델 직접 학습](./volume_61_embedding_training.md)
+[Volume 61 — 임베딩 모델 직접 학습](./volume_61_embedding_training.md)

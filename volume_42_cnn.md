@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 27 — CNN 모델 계보](./volume_43_cnn_lineage.md)
+[Volume 43 — CNN 모델 계보](./volume_43_cnn_lineage.md)

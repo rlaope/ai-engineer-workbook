@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 58 — 베이지안 머신러닝](./volume_28_bayesian_ml.md)
+[Volume 28 — 베이지안 머신러닝](./volume_28_bayesian_ml.md)

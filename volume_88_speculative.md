@@ -38,4 +38,4 @@ Speculative Decoding 은 LLM 추론의 *순차성*이라는 본질적 병목을 
 
 ## 다음 권
 
-[Volume 83 — 분산 학습](./volume_89_distributed_training.md)
+[Volume 89 — 분산 학습](./volume_89_distributed_training.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 17 — 퍼셉트론과 신경망의 기원](./volume_30_perceptron.md)
+[Volume 30 — 퍼셉트론과 신경망의 기원](./volume_30_perceptron.md)

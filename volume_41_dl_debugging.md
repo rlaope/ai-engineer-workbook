@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 63 — 데이터 증강 깊이](./volume_46_augmentation.md)
+[Volume 46 — 데이터 증강 깊이](./volume_46_augmentation.md)

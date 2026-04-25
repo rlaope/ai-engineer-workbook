@@ -706,7 +706,7 @@ for step in range(500):
 
 가장 기억에 남겨야 할 한 줄은 **"행렬 분해는 데이터의 본질적 구조를 드러내는 도구이며, PCA·추천·LoRA·임베딩 모두 같은 가족이다."** 입니다.
 
-다음 권은 [Volume 6 — 미적분과 그래디언트](./volume_10_calculus_gradient.md) 입니다. 거기서는 *학습이 본질적으로 그래디언트를 따라 내려가는 일* 임을 배웁니다.
+다음 권은 [Volume 10 — 미적분과 그래디언트](./volume_10_calculus_gradient.md) 입니다. 거기서는 *학습이 본질적으로 그래디언트를 따라 내려가는 일* 임을 배웁니다.
 
 ---
 
@@ -728,4 +728,4 @@ for step in range(500):
 
 ## 다음 권
 
-[Volume 6 — 미적분과 그래디언트](./volume_10_calculus_gradient.md)
+[Volume 10 — 미적분과 그래디언트](./volume_10_calculus_gradient.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 61 — 학습률 스케줄 깊이](./volume_40_lr_schedules.md)
+[Volume 40 — 학습률 스케줄 깊이](./volume_40_lr_schedules.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 66 — Long Context 기법](./volume_52_long_context.md)
+[Volume 52 — Long Context 기법](./volume_52_long_context.md)

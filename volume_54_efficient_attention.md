@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 69 — 멀티모달 임베딩](./volume_58_multimodal_embedding.md)
+[Volume 58 — 멀티모달 임베딩](./volume_58_multimodal_embedding.md)

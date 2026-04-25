@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 33 — 단어 임베딩](./volume_55_word_embedding.md)
+[Volume 55 — 단어 임베딩](./volume_55_word_embedding.md)

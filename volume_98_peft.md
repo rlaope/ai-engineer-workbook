@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 89 — 데이터셋 엔지니어링 종합](./volume_100_dataset_engineering.md)
+[Volume 100 — 데이터셋 엔지니어링 종합](./volume_100_dataset_engineering.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 79 — Image-to-Image·Inpainting·Outpainting](./volume_82_img2img.md)
+[Volume 82 — Image-to-Image·Inpainting·Outpainting](./volume_82_img2img.md)

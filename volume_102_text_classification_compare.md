@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 96 — 텍스트 클러스터링·토픽 모델링](./volume_103_text_clustering.md)
+[Volume 103 — 텍스트 클러스터링·토픽 모델링](./volume_103_text_clustering.md)

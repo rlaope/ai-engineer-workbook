@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 21 — 정규화 (Normalization)](./volume_34_normalization.md)
+[Volume 34 — 정규화 (Normalization)](./volume_34_normalization.md)

@@ -38,4 +38,4 @@ Mixture of Experts 는 *입력마다 일부 전문가만 활성화*함으로써 
 
 ## 다음 권
 
-[Volume 68 — 효율적 어텐션 변형](./volume_54_efficient_attention.md)
+[Volume 54 — 효율적 어텐션 변형](./volume_54_efficient_attention.md)

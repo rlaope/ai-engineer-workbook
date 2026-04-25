@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 39 — 프롬프트와 In-Context Learning](./volume_65_prompting.md)
+[Volume 65 — 프롬프트와 In-Context Learning](./volume_65_prompting.md)

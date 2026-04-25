@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 98 — AI 가속기 비교](./volume_90_accelerators.md)
+[Volume 90 — AI 가속기 비교](./volume_90_accelerators.md)

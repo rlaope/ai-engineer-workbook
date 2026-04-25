@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 100 — CUDA Python 입문](./volume_91_cuda_python.md)
+[Volume 91 — CUDA Python 입문](./volume_91_cuda_python.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 22 — 정칙화 (Regularization)](./volume_35_regularization.md)
+[Volume 35 — 정칙화 (Regularization)](./volume_35_regularization.md)

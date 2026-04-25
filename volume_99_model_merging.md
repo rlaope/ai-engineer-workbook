@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 95 — 텍스트 분류 4 접근 비교](./volume_102_text_classification_compare.md)
+[Volume 102 — 텍스트 분류 4 접근 비교](./volume_102_text_classification_compare.md)

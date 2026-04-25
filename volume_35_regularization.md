@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 23 — PyTorch 실전](./volume_36_pytorch_practice.md)
+[Volume 36 — PyTorch 실전](./volume_36_pytorch_practice.md)

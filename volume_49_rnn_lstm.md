@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 31 — Attention 메커니즘](./volume_50_attention.md)
+[Volume 50 — Attention 메커니즘](./volume_50_attention.md)

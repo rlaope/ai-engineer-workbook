@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 50 — AI 시스템의 운영·관측·비용·거버넌스](./volume_92_ops_governance.md)
+[Volume 92 — AI 시스템의 운영·관측·비용·거버넌스](./volume_92_ops_governance.md)

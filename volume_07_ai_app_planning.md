@@ -38,4 +38,4 @@ AI 프로젝트의 가장 흔한 실패 원인은 *모델 성능*이 아니라 *
 
 ## 다음 권
 
-[Volume 93 — NER·정보 추출](./volume_101_ner.md)
+[Volume 101 — NER·정보 추출](./volume_101_ner.md)

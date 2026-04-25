@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 14 — SVM 과 커널 방법](./volume_24_svm_kernel.md)
+[Volume 24 — SVM 과 커널 방법](./volume_24_svm_kernel.md)

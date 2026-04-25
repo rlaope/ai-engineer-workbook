@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 29 — Vision Transformer (ViT)](./volume_45_vit.md)
+[Volume 45 — Vision Transformer (ViT)](./volume_45_vit.md)

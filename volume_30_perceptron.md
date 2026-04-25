@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 18 — MLP 와 유니버설 근사](./volume_31_mlp_universal_approx.md)
+[Volume 31 — MLP 와 유니버설 근사](./volume_31_mlp_universal_approx.md)

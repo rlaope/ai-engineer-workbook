@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 57 — 특성 공학](./volume_27_feature_engineering.md)
+[Volume 27 — 특성 공학](./volume_27_feature_engineering.md)

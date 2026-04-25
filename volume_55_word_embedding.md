@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 34 — 문장·문서 임베딩](./volume_56_sentence_embedding.md)
+[Volume 56 — 문장·문서 임베딩](./volume_56_sentence_embedding.md)

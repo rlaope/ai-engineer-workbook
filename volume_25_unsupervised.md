@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 16 — 차원 축소와 시각화](./volume_26_dimensionality_reduction.md)
+[Volume 26 — 차원 축소와 시각화](./volume_26_dimensionality_reduction.md)

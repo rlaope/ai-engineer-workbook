@@ -396,7 +396,7 @@ NumPy 사고는 PyTorch 로 *거의 1:1 이전* 됩니다. PyTorch 가 추가하
 
 가장 기억에 남겨야 할 한 줄은 **"수학을 코드로 옮기는 사고가 NumPy 에서 시작되며, 그대로 PyTorch 로 이전된다."** 입니다.
 
-다음 권은 [Volume 10 — 머신러닝의 본질과 학습 패러다임](./volume_20_machine_learning_essence.md) 입니다.
+다음 권은 [Volume 20 — 머신러닝의 본질과 학습 패러다임](./volume_20_machine_learning_essence.md) 입니다.
 
 ---
 
@@ -416,4 +416,4 @@ NumPy 사고는 PyTorch 로 *거의 1:1 이전* 됩니다. PyTorch 가 추가하
 
 ## 다음 권
 
-[Volume 10 — 머신러닝의 본질과 학습 패러다임](./volume_20_machine_learning_essence.md)
+[Volume 20 — 머신러닝의 본질과 학습 패러다임](./volume_20_machine_learning_essence.md)

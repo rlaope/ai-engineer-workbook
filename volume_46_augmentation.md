@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 64 — 자가지도 비전](./volume_47_ssl_vision.md)
+[Volume 47 — 자가지도 비전](./volume_47_ssl_vision.md)

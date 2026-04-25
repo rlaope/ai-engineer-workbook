@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 43 — 멀티에이전트와 워크플로](./volume_74_multi_agent.md)
+[Volume 74 — 멀티에이전트와 워크플로](./volume_74_multi_agent.md)

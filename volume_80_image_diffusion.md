@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 47 — GPU 아키텍처와 CUDA](./volume_84_gpu_cuda.md)
+[Volume 84 — GPU 아키텍처와 CUDA](./volume_84_gpu_cuda.md)

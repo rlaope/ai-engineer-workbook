@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 26 — 합성곱 신경망(CNN)](./volume_42_cnn.md)
+[Volume 42 — 합성곱 신경망(CNN)](./volume_42_cnn.md)

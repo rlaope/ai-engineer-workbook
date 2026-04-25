@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 36 — 토크나이저](./volume_62_tokenizer.md)
+[Volume 62 — 토크나이저](./volume_62_tokenizer.md)

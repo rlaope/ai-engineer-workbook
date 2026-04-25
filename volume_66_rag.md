@@ -39,4 +39,4 @@ LLM 의 가장 큰 약점은 *학습 시점 이후의 지식과 사내 비공개
 
 ## 다음 권
 
-[Volume 41 — 에이전트의 본질](./volume_72_agent_essence.md)
+[Volume 72 — 에이전트의 본질](./volume_72_agent_essence.md)

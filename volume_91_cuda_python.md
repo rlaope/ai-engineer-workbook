@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 101 — 데이터셋 종합 실습 워크북](./volume_104_dataset_workbook.md)
+[Volume 104 — 데이터셋 종합 실습 워크북](./volume_104_dataset_workbook.md)

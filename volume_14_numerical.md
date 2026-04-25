@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 55 — 최적화 이론](./volume_15_optimization.md)
+[Volume 15 — 최적화 이론](./volume_15_optimization.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 25 — 모델 평가와 메트릭](./volume_38_evaluation_metrics.md)
+[Volume 38 — 모델 평가와 메트릭](./volume_38_evaluation_metrics.md)

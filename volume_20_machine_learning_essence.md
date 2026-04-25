@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 11 — 회귀](./volume_21_regression.md)
+[Volume 21 — 회귀](./volume_21_regression.md)

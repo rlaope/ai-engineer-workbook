@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 71 — Reranker 깊이](./volume_60_reranker.md)
+[Volume 60 — Reranker 깊이](./volume_60_reranker.md)

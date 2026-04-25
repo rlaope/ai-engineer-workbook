@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 92 — AI 애플리케이션 기획·PRD](./volume_07_ai_app_planning.md)
+[Volume 7 — AI 애플리케이션 기획·PRD](./volume_07_ai_app_planning.md)

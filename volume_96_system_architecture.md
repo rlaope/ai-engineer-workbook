@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 91 — LLM-as-Judge 평가 자동화](./volume_71_llm_as_judge.md)
+[Volume 71 — LLM-as-Judge 평가 자동화](./volume_71_llm_as_judge.md)

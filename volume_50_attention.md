@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 32 — Transformer 완전 정복](./volume_51_transformer.md)
+[Volume 51 — Transformer 완전 정복](./volume_51_transformer.md)

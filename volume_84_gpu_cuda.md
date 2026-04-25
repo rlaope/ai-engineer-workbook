@@ -38,4 +38,4 @@ GPU 는 단순히 *빠른 CPU* 가 아닙니다. 수만 개의 단순 코어를 
 
 ## 다음 권
 
-[Volume 48 — 추론 최적화](./volume_85_inference_optimization.md)
+[Volume 85 — 추론 최적화](./volume_85_inference_optimization.md)

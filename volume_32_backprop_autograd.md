@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 20 — 옵티마이저](./volume_33_optimizers.md)
+[Volume 33 — 옵티마이저](./volume_33_optimizers.md)

@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 44 — GAN 과 적대적 학습](./volume_78_gan.md)
+[Volume 78 — GAN 과 적대적 학습](./volume_78_gan.md)

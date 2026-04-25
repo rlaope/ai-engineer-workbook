@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 80 — 비디오·3D 생성](./volume_83_video_3d.md)
+[Volume 83 — 비디오·3D 생성](./volume_83_video_3d.md)

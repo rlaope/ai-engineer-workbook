@@ -39,4 +39,4 @@ LLM 애플리케이션은 *사용자 입력*을 *모델 명령*과 같은 컨텍
 
 ## 다음 권
 
-[Volume 88 — PEFT — LoRA·QLoRA·Adapter·Prompt Tuning](./volume_98_peft.md)
+[Volume 98 — PEFT — LoRA·QLoRA·Adapter·Prompt Tuning](./volume_98_peft.md)

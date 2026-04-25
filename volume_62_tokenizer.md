@@ -38,4 +38,4 @@ LLM 의 입력 단위는 글자도 단어도 아닌 *토큰*입니다. 토크나
 
 ## 다음 권
 
-[Volume 37 — LLM 사전학습과 스케일링 법칙](./volume_63_llm_pretraining.md)
+[Volume 63 — LLM 사전학습과 스케일링 법칙](./volume_63_llm_pretraining.md)

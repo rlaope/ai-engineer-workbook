@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 103 — 정보 기하와 매니폴드](./volume_18_information_geometry.md)
+[Volume 18 — 정보 기하와 매니폴드](./volume_18_information_geometry.md)

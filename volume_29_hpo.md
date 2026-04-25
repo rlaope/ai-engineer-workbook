@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 60 — 활성화 함수 깊이](./volume_39_activations.md)
+[Volume 39 — 활성화 함수 깊이](./volume_39_activations.md)

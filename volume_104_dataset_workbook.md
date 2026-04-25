@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 102 — 통계적 학습 이론](./volume_17_learning_theory.md)
+[Volume 17 — 통계적 학습 이론](./volume_17_learning_theory.md)

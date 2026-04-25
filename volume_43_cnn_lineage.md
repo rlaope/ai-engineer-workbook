@@ -38,4 +38,4 @@ ResNet 의 잔차 연결, VGG 의 단순함, Inception 의 멀티 스케일, Eff
 
 ## 다음 권
 
-[Volume 28 — 객체 탐지와 세그멘테이션](./volume_44_detection_segmentation.md)
+[Volume 44 — 객체 탐지와 세그멘테이션](./volume_44_detection_segmentation.md)

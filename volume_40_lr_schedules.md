@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 62 — 딥러닝 디버깅](./volume_41_dl_debugging.md)
+[Volume 41 — 딥러닝 디버깅](./volume_41_dl_debugging.md)

@@ -38,4 +38,4 @@ RAG·시멘틱 검색·중복 제거·분류는 모두 *문장 또는 문서를 
 
 ## 다음 권
 
-[Volume 35 — 벡터 검색과 ANN](./volume_57_vector_search.md)
+[Volume 57 — 벡터 검색과 ANN](./volume_57_vector_search.md)

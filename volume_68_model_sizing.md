@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 74 — Constrained Generation](./volume_69_constrained_gen.md)
+[Volume 69 — Constrained Generation](./volume_69_constrained_gen.md)

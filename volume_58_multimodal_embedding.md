@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 70 — 임베딩 평가와 벤치마크](./volume_59_embedding_eval.md)
+[Volume 59 — 임베딩 평가와 벤치마크](./volume_59_embedding_eval.md)

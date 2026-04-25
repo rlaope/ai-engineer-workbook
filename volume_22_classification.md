@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 13 — 앙상블](./volume_23_ensemble.md)
+[Volume 23 — 앙상블](./volume_23_ensemble.md)

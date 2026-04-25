@@ -40,4 +40,4 @@
 
 ## 다음 권
 
-[Volume 84 — 모델 모니터링 깊이](./volume_93_monitoring_deep.md)
+[Volume 93 — 모델 모니터링 깊이](./volume_93_monitoring_deep.md)

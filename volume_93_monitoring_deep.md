@@ -38,4 +38,4 @@
 
 ## 다음 권
 
-[Volume 85 — AI 인시던트 사후 분석](./volume_94_postmortem.md)
+[Volume 94 — AI 인시던트 사후 분석](./volume_94_postmortem.md)

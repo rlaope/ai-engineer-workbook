@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 67 — Mixture of Experts (MoE)](./volume_53_moe.md)
+[Volume 53 — Mixture of Experts (MoE)](./volume_53_moe.md)

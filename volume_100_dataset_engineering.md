@@ -39,4 +39,4 @@
 
 ## 다음 권
 
-[Volume 90 — AI 시스템 아키텍처 종합](./volume_96_system_architecture.md)
+[Volume 96 — AI 시스템 아키텍처 종합](./volume_96_system_architecture.md)
